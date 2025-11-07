@@ -1,31 +1,62 @@
 package edu.icet.controller;
 
 import edu.icet.model.Customer;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import edu.icet.service.CustomerService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/customer")
 public class CustomerController {
-    @GetMapping("/name")
-    public String getName() {
-        return "Maduka";
+
+    @Autowired
+    private CustomerService customerService;
+
+    @PostMapping
+    public Customer createCustomer(@RequestBody Customer customer) {
+        return customerService.createCustomer(customer);
     }
 
-    @GetMapping("/age")
-    public Integer getAge() {
-        return 22;
+        @GetMapping("/{id}")
+
+        public Customer getCustomerById(@PathVariable String id) {
+
+            return customerService.getCustomerById(id);
+
+        }
+
+    
+
+        @GetMapping
+
+        public List<Customer> getAllCustomers() {
+
+            return customerService.getAllCustomers();
+
+        }
+
+    
+
+        @PutMapping("/{id}")
+
+        public Customer updateCustomer(@PathVariable String id, @RequestBody Customer customer) {
+
+            return customerService.updateCustomer(id, customer);
+
+        }
+
+    
+
+        @DeleteMapping("/{id}")
+
+        public void deleteCustomer(@PathVariable String id) {
+
+            customerService.deleteCustomer(id);
+
+        }
+
     }
 
-
-    @GetMapping("/get-customer")
-    public Customer getCustomer(){
-        return new Customer(
-                "C001",
-                "Maduka",
-                "Galle",
-                25000.00
-        );
-    }
-}
+    
